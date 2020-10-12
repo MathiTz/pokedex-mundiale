@@ -1,0 +1,13 @@
+.text-alert {
+  text-align: center;
+  font-size: 25px;
+  color: #fff;
+}
+
+.header-favorites svg {
+  cursor: pointer;
+  position: absolute;
+  left: 50px;
+  top: 20px;
+  font-size: 20px;
+}
