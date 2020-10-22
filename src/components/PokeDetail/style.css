@@ -1,0 +1,56 @@
+.poke-details {
+  text-align: center;
+  margin: 50px auto;
+  width: 600px;
+  height: 700px;
+  border-radius: 50px;
+  color: #fff;
+  background: #4a555e;
+  box-shadow: 5px 5px 10px #465058, -5px -5px 10px #4e5a64;
+
+  display: flex;
+  flex-direction: column;
+  /* align-items: center; */
+}
+
+.poke-details-favorite {
+  position: relative;
+  left: 48.5%;
+}
+
+.poke-card-img {
+  width: 96px;
+  height: 96px;
+  margin: 0 auto;
+}
+
+.poke-details p {
+  text-transform: capitalize;
+  text-align: left;
+  margin: 10px 0 10px 5px;
+}
+
+.poke-details svg {
+  cursor: pointer;
+}
+
+.chains-evolution {
+  margin-top: 40px;
+
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.chains-evolution p {
+  border: 1px solid #4589c0;
+  border-radius: 5px;
+  padding: 10px 15px;
+}
+
+.active-name {
+  border: 1px solid #008cff;
+  background: #fff;
+  color: #000;
+}

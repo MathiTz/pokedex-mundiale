@@ -1,0 +1,8 @@
+.details-page svg.navigate-icon {
+  cursor: pointer;
+  position: absolute;
+  left: 50px;
+  top: 20px;
+  font-size: 20px;
+  color: #fff;
+}

@@ -7,38 +7,27 @@ import api from "../../services/api";
 import "./style.css";
 
 const PokeCard = (props) => {
-  const { addFavorite, removeFavorite, favorites } = useAppContext();
+  const { handleFavorite, checkIfItsFavorite } = useAppContext();
   const history = useHistory();
-  const { data } = props;
+  const { data, pokemonId } = props;
   const [pokemon, setPokemon] = useState();
 
   useEffect(() => {
-    api
-      .get(data.url)
-      .then((res) => setPokemon(res.data))
-      .catch((e) => console.log(e));
+    if (data) {
+      api
+        .get(data.url)
+        .then((res) => setPokemon(res.data))
+        .catch((e) => console.log(e));
+    } else {
+      api
+        .get(`/${pokemonId}`)
+        .then((res) => setPokemon(res.data))
+        .catch((e) => console.log(e));
+    }
   }, []);
 
   const navigateToDetails = (id) => {
     history.push(`/details/${id}`);
-  };
-
-  const checkIfItsFavorite = (id) => {
-    const findId = favorites.find((favorite) => favorite === id);
-
-    if (findId) return true;
-
-    return false;
-  };
-
-  const handleFavorite = (id) => {
-    const check = checkIfItsFavorite(id);
-
-    if (check) {
-      removeFavorite(id);
-    } else {
-      addFavorite(id);
-    }
   };
 
   return (

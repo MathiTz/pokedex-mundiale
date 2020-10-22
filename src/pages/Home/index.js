@@ -9,9 +9,12 @@ import pokedexBackground from "../../assets/pokedex.png";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 
 import "./style.css";
+import filterList from "../../utils/filter";
 
 const Home = () => {
   const { enableLoading, disableLoading } = useAppContext();
+  const [pokemonsFilter, setPokemonsFilter] = useState([]);
+  const [pokemonsFiltered, setPokemonsFiltered] = useState([]);
   const [pokemonsData, setPokemonsData] = useState([]);
   const [page, setPage] = useState(1);
   const [offset, setOffset] = useState(0);
@@ -36,6 +39,10 @@ const Home = () => {
     getPokemonUrl();
   }, [offset]);
 
+  useEffect(() => {
+    api.get("?limit=1050").then((res) => setPokemonsFilter(res.data.results));
+  }, []);
+
   const nextPage = useCallback(() => {
     enableLoading();
 
@@ -46,7 +53,7 @@ const Home = () => {
     setOffset(newOffset);
 
     disableLoading();
-  }, [page, offset]);
+  }, [page, offset, enableLoading, disableLoading]);
 
   const previousPage = useCallback(() => {
     enableLoading();
@@ -58,7 +65,25 @@ const Home = () => {
     setOffset(newOffset);
 
     disableLoading();
-  }, [page, offset]);
+  }, [page, offset, enableLoading, disableLoading]);
+
+  const handleFilterPokemons = (e) => {
+    const { value } = e.target;
+
+    if (value === "") {
+      setPokemonsFiltered([]);
+
+      return;
+    }
+
+    const filteredPokemonData = filterList(pokemonsFilter, value);
+
+    const newPokemonData = filteredPokemonData
+      .filter((value) => value !== undefined)
+      .slice(0, 23);
+
+    setPokemonsFiltered(newPokemonData);
+  };
 
   return (
     <>
@@ -71,11 +96,7 @@ const Home = () => {
         <ul>
           <li>
             <label htmlFor="filter">Filter</label>
-            <input
-              type="text"
-              name="filter"
-              onChange={(e) => console.log(e.target.value)}
-            />
+            <input type="text" name="filter" onChange={handleFilterPokemons} />
           </li>
           <li>
             <Link className="favorites-link" to="/favorites">
@@ -85,10 +106,13 @@ const Home = () => {
         </ul>
       </header>
       <section className="poke-cards">
-        {pokemonsData &&
-          pokemonsData.map((pokemonData) => (
-            <PokeCard key={pokemonData.name} data={pokemonData} />
-          ))}
+        {pokemonsData && !pokemonsFiltered.length
+          ? pokemonsData.map((pokemonData) => (
+              <PokeCard key={pokemonData.name} data={pokemonData} />
+            ))
+          : pokemonsFiltered.map((pokemonData) => (
+              <PokeCard key={pokemonData.name} data={pokemonData} />
+            ))}
       </section>
       <footer>
         {page !== 1 ? (

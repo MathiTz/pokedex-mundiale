@@ -32,6 +32,24 @@ const AppProvider = ({ children }) => {
     );
   }
 
+  const checkIfItsFavorite = (id) => {
+    const findId = favorites.find((favorite) => favorite === id);
+
+    if (findId) return true;
+
+    return false;
+  };
+
+  const handleFavorite = (id) => {
+    const check = checkIfItsFavorite(id);
+
+    if (check) {
+      removeFavorite(id);
+    } else {
+      addFavorite(id);
+    }
+  };
+
   const enableLoading = () => {
     setLoading(true);
   };
@@ -43,8 +61,8 @@ const AppProvider = ({ children }) => {
   return (
     <AppContext.Provider
       value={{
-        addFavorite,
-        removeFavorite,
+        checkIfItsFavorite,
+        handleFavorite,
         favorites,
         loading,
         enableLoading,

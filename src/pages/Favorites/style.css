@@ -4,10 +4,22 @@
   color: #fff;
 }
 
-.header-favorites svg {
+.header-favorites svg.navigate-home {
   cursor: pointer;
   position: absolute;
   left: 50px;
   top: 20px;
   font-size: 20px;
+  color: #fff;
+}
+
+.header-favorites {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.header-favorites h1.title {
+  color: #fff;
+  text-align: center;
 }

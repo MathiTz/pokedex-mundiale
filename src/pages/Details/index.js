@@ -1,10 +1,15 @@
-import React, { useState } from "react";
-import { useEffect } from "react";
-import { useParams } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useHistory, useParams } from "react-router-dom";
+import PokeDetail from "../../components/PokeDetail";
 import { useAppContext } from "../../hooks";
 import api from "../../services/api";
 
+import "./style.css";
+
+import { FaChevronLeft } from "react-icons/fa";
+
 const Details = () => {
+  const history = useHistory();
   const { enableLoading, disableLoading } = useAppContext();
   const { id } = useParams();
   const [data, setData] = useState();
@@ -13,28 +18,20 @@ const Details = () => {
     enableLoading();
     api.get(`/${id}`).then((res) => {
       setData(res.data);
-      // console.log(res.data);
       disableLoading();
     });
   }, []);
 
+  const navegateToHome = () => {
+    history.push("/");
+  };
+
   return (
-    <section className="header-details">
-      {/* {data && (
-        <>
-          <p>{data.name}</p>
-          <div className="poke-imgs">
-            <img
-              className="poke-card-img"
-              src={data.sprites["front_default"]}
-            />
-            <img className="poke-card-img" src={data.sprites["back_default"]} />
-          </div>
-          {data.types.map((type) => (
-            <p>{type.type}</p>
-          ))}
-        </>
-      )} */}
+    <section className="details-page">
+      <FaChevronLeft className="navigate-icon" onClick={navegateToHome} />
+      <section className="header-details">
+        {data && <PokeDetail pokemon={data} />}
+      </section>
     </section>
   );
 };
