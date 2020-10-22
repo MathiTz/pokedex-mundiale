@@ -114,17 +114,19 @@ const Home = () => {
               <PokeCard key={pokemonData.name} data={pokemonData} />
             ))}
       </section>
-      <footer>
-        {page !== 1 ? (
-          <button onClick={previousPage} className="previous">
-            <FaChevronLeft />
+      {!pokemonsFiltered.length && (
+        <footer>
+          {page !== 1 ? (
+            <button onClick={previousPage} className="previous">
+              <FaChevronLeft />
+            </button>
+          ) : null}
+          <span>{page}</span>
+          <button onClick={nextPage} className="next">
+            <FaChevronRight />
           </button>
-        ) : null}
-        <span>{page}</span>
-        <button onClick={nextPage} className="next">
-          <FaChevronRight />
-        </button>
-      </footer>
+        </footer>
+      )}
     </>
   );
 };
